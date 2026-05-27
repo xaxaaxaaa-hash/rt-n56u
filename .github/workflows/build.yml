@@ -1,0 +1,51 @@
+name: Padavan CI Builder
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Router model"
+        required: true
+        default: "MI-R4A"
+        type: choice
+        options:
+          - MI-R4A
+          - MI-NANO
+          - MI-3
+          - K2P
+          - RT-AC56U
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            build-essential git wget curl gawk \
+            fakeroot cpio unzip file \
+            libncurses5-dev libssl-dev
+
+      - name: Fix permissions
+        run: chmod -R +x .
+
+      - name: Download toolchain
+        run: |
+          cd toolchain-mipsel
+          sh dl_toolchain.sh
+
+      - name: Build firmware
+        run: |
+          cd trunk
+          fakeroot ./build_firmware_modify ${{ inputs.model }}
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: padavan-${{ inputs.model }}
+          path: trunk/images/*.trx
