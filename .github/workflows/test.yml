@@ -18,7 +18,8 @@ jobs:
            build-essential git wget curl gawk \
            fakeroot cpio unzip file \
            libncurses5-dev libssl-dev \
-           gettext autoconf automake libtool pkg-config
+           gettext autoconf automake libtool pkg-config \
+           autopoint texinfo
 
       - name: Toolchain
         run: |
