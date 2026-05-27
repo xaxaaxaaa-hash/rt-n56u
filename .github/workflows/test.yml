@@ -18,8 +18,9 @@ jobs:
            build-essential git wget curl gawk \
            fakeroot cpio unzip file \
            libncurses5-dev libssl-dev \
-           gettext gettext-base autopoint \
-           autoconf automake libtool texinfo pkg-config
+            gettext autoconf automake libtool pkg-config \
+            libtool-bin libltdl-dev \
+            texinfo autopoint
 
       - name: Fix PATH
         run: echo "PATH=/usr/bin:/bin:/usr/sbin:/sbin:$PATH" >> $GITHUB_ENV
