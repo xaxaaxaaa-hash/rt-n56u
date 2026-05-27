@@ -1,10 +1,35 @@
-name: test
+name: Padavan MI-R4A Build
 
 on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-20.04
+
     steps:
-      - run: echo "WORKFLOW WORKS"
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install deps
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential git wget curl gawk \
+          fakeroot cpio unzip file libncurses5-dev libssl-dev
+
+      - name: Toolchain
+        run: |
+          cd toolchain-mipsel
+          chmod +x dl_toolchain.sh
+          sh dl_toolchain.sh
+
+      - name: Build firmware
+        run: |
+          cd trunk
+          fakeroot ./build_firmware_modify MI-R4A
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: MI-R4A-firmware
+          path: trunk/images/*.trx
