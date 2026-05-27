@@ -23,7 +23,7 @@ all:
 	make -C $(SSTRIP_NAME)
 	make -C lzma
 ifeq ($(CONFIG_RT2880_ROOTFS_IN_FLASH),y)
-	make -C mksquashfs_xz
+# make -C mksquashfs_xz
 endif
 
 clean:
