@@ -18,9 +18,11 @@ jobs:
            build-essential git wget curl gawk \
            fakeroot cpio unzip file \
            libncurses5-dev libssl-dev \
-           gettext autoconf automake libtool pkg-config \
-           autopoint texinfo
+           gettext gettext-base autopoint \
+           autoconf automake libtool texinfo pkg-config
 
+       - name: Fix PATH
+         run: echo "PATH=/usr/bin:/bin:/usr/sbin:/sbin:$PATH" >> $GITHUB_ENV
       - name: Toolchain
         run: |
           cd toolchain-mipsel
