@@ -15,10 +15,10 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y \
-      build-essential git wget curl gawk \
-      fakeroot cpio unzip file \
-      libncurses5-dev libssl-dev \
-      gettext autoconf automake libtool pkg-config
+           build-essential git wget curl gawk \
+           fakeroot cpio unzip file \
+           libncurses5-dev libssl-dev \
+           gettext autoconf automake libtool pkg-config
 
       - name: Toolchain
         run: |
